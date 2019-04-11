@@ -3,6 +3,5 @@
     session_destroy();
 ?>
     <script>
-        document.location.href = "dashboard.php";
-
+        document.location.href = "index.php";
     </script>
