@@ -10,7 +10,7 @@
         $reqUsr = 'SELECT * FROM clients WHERE email LIKE "' .$login.'"';
         if($usr = $bdd->query($reqUsr)){
             if($u = $usr->fetch()){
-                if($u->pwd == $passwd){
+                if($u->password == $passwd){
                     $_SESSION['nom'] = $u->nom;
                     $_SESSION['prenom'] = $u->prenom;
                     echo "connecté(e)";
