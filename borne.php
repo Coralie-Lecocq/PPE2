@@ -19,7 +19,7 @@
         include ("db.php");
 
         // On récupère tout le contenu de la table 
-        $reponse = $bdd->query('SELECT * FROM borne');
+        $reponse = $bdd->query('SELECT * FROM bornes');
 
         // On affiche chaque entrée une à une
         while ($donnees = $reponse->fetch())
