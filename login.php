@@ -5,7 +5,7 @@
     /* DEBUT VERIFICATION DE LA RECEPTION DE FORMULAIRE */
     if (isset($_POST['user']) && isset($_POST['passwd'])){      // cas ou on reçoit un formulaire
         $login = addslashes($_POST['user']);
-        $passwd = $_POST['passwd'];
+        $passwd = md5($_POST['passwd']);
         
         $reqUsr = 'SELECT * FROM clients WHERE email LIKE "' .$login.'"';
         echo $reqUsr;
