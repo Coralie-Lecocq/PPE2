@@ -7,7 +7,7 @@
         $login = addslashes($_POST['user']);
         $passwd = $_POST['passwd'];
         
-        $reqUsr = 'SELECT * FROM client WHERE email LIKE "' .$login.'"';
+        $reqUsr = 'SELECT * FROM clients WHERE email LIKE "' .$login.'"';
         echo $reqUsr;
         if($usr = $bdd->query($reqUsr)){
             if($u = $usr->fetch()){
