@@ -1,5 +1,6 @@
 <?php
     include('db.php');
+    require 'panier.class.php';
     $panier = new Panier();
 
     if(isset($_GET['id'])) {
