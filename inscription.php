@@ -43,11 +43,10 @@
         <?php
             include ('db.php');
            
-            if(isset($_POST['user'], $_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['passwd'], $_POST['confirmpasswd']))
+            if(isset($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['passwd'], $_POST['confirmpasswd']))
             {
                  if ($_POST['passwd'] == $_POST['confirmpasswd'])
                  {
-                 $user = addslashes($_POST['user']);
                  $nom = addslashes($_POST['nom']);
                  $prenom = addslashes($_POST['prenom']);
                  $email = addslashes($_POST['email']);
@@ -55,7 +54,7 @@
                 
                  include("db.php");
                      
-                 $req = 'INSERT INTO users (login, passwd, nom, prenom, email) VALUES ("' .$user. '", "' .$passwd. '", "' .$nom. '", "'.$prenom.'", "' .$email.'")';
+                 $req = 'INSERT INTO clients (email, password, nom, prenom) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'")';
                      
                  if($insertUsr = $bdd->query($req))
                  {
