@@ -45,26 +45,26 @@
            
             if(isset($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['passwd'], $_POST['confirmpasswd']))
             {
-                 if ($_POST['passwd'] == $_POST['confirmpasswd'])
-                 {
-                 $nom = addslashes($_POST['nom']);
-                 $prenom = addslashes($_POST['prenom']);
-                 $email = addslashes($_POST['email']);
-                 $passwd = md5($_POST['passwd']);
-                
-                 include("db.php");
-                     
-                 $req = 'INSERT INTO clients (email, password, nom, prenom) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'")';
-                     
-                 if($insertUsr = $bdd->query($req))
-                 {
-                    echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
-                 }
-                 else
-                 {
-                    echo " FAIL ! Le login ou l'email est déjà utilisé. " . $bdd->errorInfo()[2];
-                 }
-                 }              
+                if ($_POST['passwd'] == $_POST['confirmpasswd'])
+                {
+                    $nom = addslashes($_POST['nom']);
+                    $prenom = addslashes($_POST['prenom']);
+                    $email = addslashes($_POST['email']);
+                    $passwd = md5($_POST['passwd']);
+                        
+                    $req = 'INSERT INTO clients (email, password, nom, prenom) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'")';
+                        
+                    echo $req; 
+
+                    if($insertUsr = $bdd->query($req))
+                    {
+                        echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
+                    }    
+                    else
+                    {
+                        echo " FAIL ! Le login ou l'email est déjà utilisé. " . $bdd->errorInfo()[2];
+                    }
+                }              
             }
         ?>
         
@@ -74,7 +74,7 @@
                 <div id="output"></div>
                 <div class="avatar"></div>
                 <div class="form-box">
-                    <form action="" method="POST">
+                    <form action="inscription.php" method="POST">
                         <input name="nom" type="text" placeholder="Nom" required autofocus>
                         <input name="prenom" type="text" placeholder="Prénom" required>
                         <input name="email" type="email" placeholder="email" required>
