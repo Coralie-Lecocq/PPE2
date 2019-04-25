@@ -4,11 +4,12 @@
     $panier = new Panier();
 
     if(isset($_GET['id'])) {
-        $product = $bdd->query('SELECT idconsommable FROM consommables WHERE idconsommable='. $_GET['id']);
-        if(empty($product)) {
+       $req = $bdd->query('SELECT * FROM consommables WHERE idconsommable='. $_GET['id']);
+       $product = $req->fetch();
+       if(empty($product)) {
             die('Ce produit n\'existe pas');
         }
-        $panier->add($product[0]->idconsommable);
+        $panier->add($product->idconsommable);
         ?>
         <script>
             document.location.href = "index.php";

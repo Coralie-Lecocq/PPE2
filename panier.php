@@ -1,61 +1,3 @@
-<?php
-    include("fonctions_panier.php");
-
- $erreur = false;
-
-$action = (isset($_POST['action'])? $_POST['action']:  (isset($_GET['action'])? $_GET['action']:null )) ;
-if($action !== null)
-{
-   if(!in_array($action,array('ajout', 'suppression', 'refresh')))
-   $erreur=true;
-
-   //récuperation des variables en POST ou GET
-   $l = (isset($_POST['l'])? $_POST['l']:  (isset($_GET['l'])? $_GET['l']:null )) ;
-   $p = (isset($_POST['p'])? $_POST['p']:  (isset($_GET['p'])? $_GET['p']:null )) ;
-   $q = (isset($_POST['q'])? $_POST['q']:  (isset($_GET['q'])? $_GET['q']:null )) ;
-
-   //Suppression des espaces verticaux
-   $l = preg_replace('#\v#', '',$l);
-   //On verifie que $p soit un float
-   $p = floatval($p);
-
-   //On traite $q qui peut etre un entier simple ou un tableau d'entier
-    
-   if (is_array($q)){
-      $QteArticle = array();
-      $i=0;
-      foreach ($q as $contenu){
-         $QteArticle[$i++] = intval($contenu);
-      }
-   }
-   else
-   $q = intval($q);
-    
-}
-
-if (!$erreur) {
-   switch($action){
-      Case "ajout":
-         ajouterArticle($l,$q,$p);
-         break;
-
-      Case "suppression":
-         supprimerArticle($l);
-         break;
-
-      Case "refresh" :
-         for ($i = 0 ; $i < count($QteArticle) ; $i++)
-         {
-            modifierQTeArticle($_SESSION['panier']['libelleProduit'][$i],round($QteArticle[$i]));
-         }
-         break;
-
-      Default:
-         break;
-   }
-}
-?>
-
 <div class="breadcrumb_dress">
 		<div class="container">
 			<ul>
@@ -79,49 +21,19 @@ if (!$erreur) {
                         <th>Produits</th>
                         <th>Quantité</th>
                         <th>Nom du Produit</th>
-                        <th>Charges</th>
                         <th>Prix</th>
                         <th>Supprimer</th>
                     </tr>
                 </thead>
-                
-                <?php
-                if (creationPanier())
-                {
-                    $nbArticles=count($_SESSION['panier']['libelleProduit']);
-                    if ($nbArticles <= 0)
-                    echo "<tr><td>Votre panier est vide </ td></tr>";
-                    else
-                    {
-                        for ($i=0 ;$i < $nbArticles ; $i++)
-                        {
-                            echo "<tr>";
-                            echo "<td>".htmlspecialchars($i)."</ td>";
-                            echo "<td>".htmlspecialchars($i)."</ td>";
-                            echo "<td><input type=\"text\" size=\"4\" name=\"q[]\"value=\"".htmlspecialchars($_SESSION['panier']['qteProduit'][$i])."\"/></td>";
-                            echo "<td>".htmlspecialchars($_SESSION['panier']['libelleProduit'][$i])."</ td>";
-                            echo "<td>".htmlspecialchars($_SESSION['panier']['prixProduit'][$i])."</td>";
-                            echo "<td>".htmlspecialchars(5)."</ td>";
-                            echo "<td><a href=\"".htmlspecialchars("panier.php?action=suppression&l=".rawurlencode($_SESSION['panier']['libelleProduit'][$i]))."\">X</a></td>";
-                            echo "</tr>";
-                        }
-
-                        echo "<tr><td colspan=\"2\"> </td>";
-                        echo "<td colspan=\"2\">";
-                        echo "Total : ".MontantGlobal();
-                        echo "</td></tr>";
-
-                        echo "<tr><td colspan=\"4\">";
-                        echo "<input type=\"submit\" value=\"Rafraichir\"/>";
-                        echo "<input type=\"hidden\" name=\"action\" value=\"refresh\"/>";
-
-                        echo "</td></tr>";
-                    }
-                }
-                ?>
         
                 <!-- générer lignes / nb de produit -->
-                <!-- LIGNE 1
+                <?php
+                    include('db.php');
+                    $ids = array_keys($_SESSION['panier']);
+                    $req = $bdd->query(`SELECT * FROM products WHERE id IN(`.implode(`,`,$ids).`)`);
+                    $product = $req->fetch();
+                    foreach($products as $product):
+                ?>
                 <tr class="rem1">
                     <td class="invert">1</td>
                     <td class="invert-image"><a href="single.html"><img src="images/j3.jpg" alt=" " class="img-responsive" /></a></td>
@@ -134,9 +46,8 @@ if (!$erreur) {
                             </div>
                         </div>
                     </td>
-                    <td class="invert">Beige solid Chinos</td>
-                    <td class="invert">$5.00</td>
-                    <td class="invert">$200.00</td>
+                    <td class="invert"><?php echo $donnees->libelle; ?></td>
+                    <td class="invert"><?php  echo $donnees->prix . "€"; ?></td>
                     <td class="invert">
                         <div class="rem">
                             <div class="close1"> </div>
@@ -151,6 +62,8 @@ if (!$erreur) {
                        </script>
                     </td>
                 </tr>
+                <?php endforeach; ?>
+
                 <!-- LIGNE 2
                 <tr class="rem2">
                     <td class="invert">2</td>
