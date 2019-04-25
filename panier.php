@@ -33,7 +33,7 @@ if($action !== null)
     
 }
 
-if (!$erreur){
+if (!$erreur) {
    switch($action){
       Case "ajout":
          ajouterArticle($l,$q,$p);
@@ -84,6 +84,7 @@ if (!$erreur){
                         <th>Supprimer</th>
                     </tr>
                 </thead>
+                
                 <?php
                 if (creationPanier())
                 {
