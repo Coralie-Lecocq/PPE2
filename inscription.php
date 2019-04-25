@@ -84,7 +84,7 @@
 				        <button class="btn btn-info btn-block login" type="submit">S'inscrire</button>
 			         </form>
                         <a href="formLogin.php">Se connecter</a><br/>
-                        <a href='dashboard.php'>Retour au site</a>
+                        <a href='index.php'>Retour au site</a>
 		          </div>
 	       </div>
         </div>
