@@ -4,7 +4,7 @@
 			<div class="w3l_login">
             <!-- si connecter ne plus rediriger vers formLogin, logout ? -->
 				<a href="formLogin.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <span> <?php echo $_SESSION['prenom']. ' ' .$_SESSION['nom']?> </span>
+                <span> <?php echo $_SESSION['prenom']. ' ' .$_SESSION['nom'] ?> </span>
 			</div>
 			<div class="w3l_logo">
 				<h1><a href="?page=home">Chop Ta photo<span>Print your life</span></a></h1>
@@ -53,15 +53,13 @@
                                         <div class="col-sm-3">
                                             <ul class="multi-column-dropdown">
                                                 <h6>Papeterie</h6>
-                                                <li><a href="?page=papier">Papier photo brillant</a></li>
-                                                <li><a href="?page=papier">Papier photo mat</a></li>
+                                                <li><a href="?page=papier">Papier photo</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-sm-3">
                                             <ul class="multi-column-dropdown">
                                                 <h6>Cartouche d'encre</h6>
-                                                <li><a href="?page=encre">Cartouche jet d'encre</a></li>
-                                                <li><a href="?page=encre">Cartouche laser</a></li>
+                                                <li><a href="?page=encre">Cartouche d'encre</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-sm-4">
