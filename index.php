@@ -41,7 +41,9 @@
     <body>
   
  <?php
-        session_start();
+        require 'panier.class.php';
+        $panier = new Panier();
+
         // J'include la header dans header.php
         include("header.php");
     
