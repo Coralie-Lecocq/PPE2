@@ -41,6 +41,7 @@
     <body>
   
  <?php
+        session_start();
         // J'include la header dans header.php
         include("header.php");
     
