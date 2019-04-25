@@ -4,7 +4,13 @@
 			<div class="w3l_login">
             <!-- si connecter ne plus rediriger vers formLogin, logout ? -->
 				<a href="formLogin.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <span> <?php echo $_SESSION['prenom']. ' ' .$_SESSION['nom'] ?> </span>
+                <span> 
+                <?php 
+                if (isset($_SESSION['prenom'])) {
+                    echo $_SESSION['prenom']. ' ' .$_SESSION['nom']; 
+                }
+                ?> 
+                </span>
 			</div>
 			<div class="w3l_logo">
 				<h1><a href="?page=home">Chop Ta Photo<span>Print your life</span></a></h1>
