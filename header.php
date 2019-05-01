@@ -1,3 +1,5 @@
+<?php include('_header.php'); ?>
+
 <!-- header -->
 <header class="header" id="header">
 		<div class="container">
@@ -28,7 +30,7 @@
 			<div class="cart box_1">
 				<a href="?page=panier">
 					<div class="total">
-					<span class="simpleCart_total"></span> <span id="simpleCart_quantity" class="simpleCart_quantity"></span> objets</div>
+					<span class="price"></span> <span class="quantity"><?php echo count($_SESSION['panier']); ?></span> objets</div>
 					<img src="images/bag.png" alt="" />
 				</a>
 				<div class="clearfix"> </div>

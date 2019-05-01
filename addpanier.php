@@ -1,7 +1,5 @@
 <?php
-    include('db.php');
-    require 'panier.class.php';
-    $panier = new Panier();
+    include('_header.php');
 
     if(isset($_GET['id'])) {
        $req = $bdd->query('SELECT * FROM consommables WHERE idconsommable='. $_GET['id']);
@@ -10,9 +8,11 @@
             die('Ce produit n\'existe pas');
         }
         $panier->add($product->idconsommable);
+         //    die("produit ajouté <a href='javascript:window.history.back()'>retour</a>");
+        
         ?>
         <script>
-            // document.location.href = 'index.php';
+           document.location.href = 'javascript:window.history.back()';
         </script>
       <?php
     } else {

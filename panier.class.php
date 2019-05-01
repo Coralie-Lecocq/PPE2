@@ -10,7 +10,16 @@
         }
 
         public function add($product_id) {
-            $_SESSION['panier'][$product_id] = 1;
+            if(isset($_SESSION['panier'][$product_id])) {
+                $_SESSION['panier'][$product_id]++;
+            } else {
+                $_SESSION['panier'][$product_id] = 1;
+            }
+        }
+
+        public function del($product_id){
+            unset($_SESSION['panier'][$product_id]);
+            var_dump($_SESSION);
         }
     }
 ?>
