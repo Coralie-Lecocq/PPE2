@@ -53,8 +53,6 @@
                     $passwd = md5($_POST['passwd']);
                         
                     $req = 'INSERT INTO clients (email, password, nom, prenom) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'")';
-                        
-                    echo $req; 
 
                     if($insertUsr = $bdd->query($req))
                     {

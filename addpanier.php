@@ -12,7 +12,7 @@
         $panier->add($product->idconsommable);
         ?>
         <script>
-            document.location.href = "index.php";
+            // document.location.href = 'index.php';
         </script>
       <?php
     } else {
