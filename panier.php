@@ -19,27 +19,23 @@
         $ids = array_keys($_SESSION['panier']);
         $idsConsommables = array_keys($_SESSION['panier']['consommable']);
         $idsBornes = array_keys($_SESSION['panier']['borne']);
-        var_dump($idsConsommables);
-        var_dump($idsBornes);
-        if(empty($idsConsommables)) {
-            $consommables = array();
-        } 
-        if (empty($idsBornes)) {
-            $bornes = array();
-        } 
         if(empty($ids)) {
             $consommables = array();
             $bornes = array();
         } else {
-            if ($_SESSION['panier']['consommable']) {
+            if(empty($idsConsommables)) {
+                $consommables = array();
+            } else {
                 $req = $bdd->query('SELECT * FROM consommables WHERE idconsommable IN ('. implode(',', $idsConsommables) . ')');
                 $consommables = $req->fetchAll();
             }
-            if($_SESSION['panier']['borne']) {
+
+            if (empty($idsBornes)) {
+                $bornes = array();
+            } else {
                 $req = $bdd->query('SELECT * FROM bornes WHERE idBornes IN ('. implode(',',   $idsBornes) . ')');
                 $bornes = $req->fetchAll();
             }
-
         }
     
 
