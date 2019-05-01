@@ -17,8 +17,6 @@
 
 
 <?php
-        include ("db.php");
-
         // On récupère tout le contenu de la table 
         $req = $bdd->query('SELECT * FROM consommables WHERE type like "encre"');
         $products = $req->fetchAll();
