@@ -126,10 +126,24 @@
                 <h4>Récapitulatif de la commande</h4>
                 <ul>
                     <!-- nom produit et prix : base  -->
-                    <li>Product1 <i>-</i> <span>$200.00 </span></li>
-                    <li>Product2 <i>-</i> <span>$270.00 </span></li>
-                    <li>Product3 <i>-</i> <span>$212.00 </span></li>
-                    <li>Total <i>-</i> <span>$697.00</span></li> <!-- total colonne -->
+                    <?php  
+                    $totalconsommable = 0;
+                    foreach($consommables as $consommable):
+                        $totalconsommable += $consommable->prix * $_SESSION['panier']['consommable'][$consommable->idconsommable];
+                    ?>
+                    <li><?php echo $consommable->libelle; ?> <i></i> <span><?php  echo $consommable->prix * $_SESSION['panier']['consommable'][$consommable->idconsommable] . "€"; ?></span></li>
+                    <?php endforeach; ?>
+
+                    <?php 
+                    $totalborne = 0; 
+                    foreach($bornes as $borne):
+                        $totalborne += $borne->prix * $_SESSION['panier']['borne'][$borne->idBornes];
+                    ?>
+                     <li><?php echo $borne->libelle; ?> <i></i> <span><?php  echo $borne->prix * $_SESSION['panier']['borne'][$borne->idBornes] . "€"; ?></span></li>
+                    <?php endforeach; 
+                    $_SESSION['total'] = $totalconsommable + $totalborne;
+                    ?>
+                    <li>Total <i></i> <span><?php echo $totalconsommable + $totalborne . "€"?></span></li> <!-- total colonne -->
                 </ul>
             </div>
             <div class="checkout-right-basket">
