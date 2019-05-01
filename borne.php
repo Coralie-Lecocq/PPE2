@@ -45,7 +45,7 @@
                             <h5><a href="?page=single"><?php echo $borne->libelle; ?></a></h5>
                             <div class="simpleCart_shelfItem">
                                 <p><span><?php  echo $borne->prix + (20/100)*$borne->prix . "€"; ?></span> <i class="item_price"><?php  echo $borne->prix . "€"; ?></i></p>
-                                <p><a class="item_add" href="#">Ajouter au panier</a></p>
+                                <p><a class="item_add" href="addpanier.php?id=<?php echo $borne->idBornes; ?>&type=borne">Ajouter au panier</a></p>
                             </div>
                         </div>
                     </div>
