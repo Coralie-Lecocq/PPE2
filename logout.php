@@ -1,6 +1,7 @@
 <?php
     session_start();
-    session_destroy();
+    unset($_SESSION['prenom']);
+    unset($_SESSION['nom']);
 ?>
     <script>
         document.location.href = "index.php";
