@@ -10,7 +10,7 @@
         }
 
         public function add($product_id, $type) {
-            if(isset($_SESSION['panier'][$product_id])) {
+            if(isset($_SESSION['panier'][$type][$product_id])) {
                 $_SESSION['panier'][$type][$product_id]++;
             } else {
                 $_SESSION['panier'][$type][$product_id] = 1;
