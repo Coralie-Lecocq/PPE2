@@ -1,6 +1,6 @@
 <?php
     if(isset($_GET['del'])) {
-        $panier->del($_GET['del']);
+        $panier->del($_GET['del'], $_GET['type']);
     }
 ?>
 
@@ -17,15 +17,35 @@
     <div class="container">
     <?php
         $ids = array_keys($_SESSION['panier']);
+        $idsConsommables = array_keys($_SESSION['panier']['consommable']);
+        $idsBornes = array_keys($_SESSION['panier']['borne']);
+        var_dump($idsConsommables);
+        var_dump($idsBornes);
+        if(empty($idsConsommables)) {
+            $consommables = array();
+        } 
+        if (empty($idsBornes)) {
+            $bornes = array();
+        } 
         if(empty($ids)) {
-            $products = array();
+            $consommables = array();
+            $bornes = array();
         } else {
-            $req = $bdd->query('SELECT * FROM consommables WHERE idconsommable IN ('. implode(',', $ids) . ')');
-            $products = $req->fetchAll();
+            if ($_SESSION['panier']['consommable']) {
+                $req = $bdd->query('SELECT * FROM consommables WHERE idconsommable IN ('. implode(',', $idsConsommables) . ')');
+                $consommables = $req->fetchAll();
+            }
+            if($_SESSION['panier']['borne']) {
+                $req = $bdd->query('SELECT * FROM bornes WHERE idBornes IN ('. implode(',',   $idsBornes) . ')');
+                $bornes = $req->fetchAll();
+            }
+
         }
+    
+
     ?>
         <!-- nb de produit à reprendre dans la base : panier -->
-        <h3>Votre panier contient: <span><?php echo count($_SESSION['panier']); ?> Produit(s)</span></h3>
+        <h3>Votre panier contient: <span><?php echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); ?> Produit(s)</span></h3>
         
         <form method="post" action="panier.php">
         <div class="checkout-right">
@@ -42,33 +62,49 @@
         
                 <!-- générer lignes / nb de produit -->
                 <?php  
-                    foreach($products as $product):
+                    foreach($consommables as $consommable):
                 ?>
-                <tr class="rem<?php echo $product->idconsommable; ?>">
+                <tr class="rem1">
                     <td class="invert-image"><a href="single.html"><img src="images/borne_2.jpg" alt=" " class="img-responsive" width="50px" /></a></td>
                     <td class="invert">
                          <div class="quantity"> 
                             <div class="quantity-select">                           
                                 <div class="entry value-minus">&nbsp;</div>
-                                <div class="entry value"><span><?php echo $_SESSION['panier'][$product->idconsommable];  ?></span></div>
+                                <div class="entry value"><span><?php echo $_SESSION['panier']['consommable'][$consommable->idconsommable];  ?></span></div>
                                 <div class="entry value-plus active">&nbsp;</div>
                             </div>
                         </div>
                     </td>
-                    <td class="invert"><?php echo $product->libelle; ?></td>
-                    <td class="invert"><?php  echo $product->prix * $_SESSION['panier'][$product->idconsommable] . "€"; ?></td>
+                    <td class="invert"><?php echo $consommable->libelle; ?></td>
+                    <td class="invert"><?php  echo $consommable->prix * $_SESSION['panier']['consommable'][$consommable->idconsommable] . "€"; ?></td>
                     <td class="invert">
                         <div class="rem">
-                            <a href='?page=panier&del=<?php echo $product->idconsommable; ?>'><div class="close1"></div></a>
+                            <a href='?page=panier&type=consommable&del=<?php echo $consommable->idconsommable; ?>'><div class="close1"></div></a>
                         </div>
-                      <!--  <script>$(document).ready(function(c) {
-                            $('.close<?php echo $product->idconsommable; ?>').on('click', function(c){        
-                                $('.rem<?php echo $product->idconsommable; ?>').fadeOut('slow', function(c){
-                                    $('.rem<?php echo $product->idconsommable; ?>').remove();
-                                });
-                                });	  
-                            });
-                       </script> -->
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+
+                 <?php  
+                    foreach($bornes as $borne):
+                ?>
+                <tr class="rem1">
+                    <td class="invert-image"><a href="single.html"><img src="images/borne_2.jpg" alt=" " class="img-responsive" width="50px" /></a></td>
+                    <td class="invert">
+                         <div class="quantity"> 
+                            <div class="quantity-select">                           
+                                <div class="entry value-minus">&nbsp;</div>
+                                <div class="entry value"><span><?php echo $_SESSION['panier']['borne'][$borne->idBornes];  ?></span></div>
+                                <div class="entry value-plus active">&nbsp;</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="invert"><?php echo $borne->libelle; ?></td>
+                    <td class="invert"><?php  echo $borne->prix * $_SESSION['panier']['borne'][$borne->idBornes] . "€"; ?></td>
+                    <td class="invert">
+                        <div class="rem">
+                            <a href='?page=panier&type=borne&del=<?php echo $borne->idBornes; ?>'><div class="close1"></div></a>
+                        </div>
                     </td>
                 </tr>
                 <?php endforeach; ?>

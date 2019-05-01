@@ -30,7 +30,7 @@
 			<div class="cart box_1">
 				<a href="?page=panier">
 					<div class="total">
-					<span class="price"></span> <span class="quantity"><?php echo count($_SESSION['panier']); ?></span> objets</div>
+					<span class="price"></span> <span class="quantity"><?php echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); ?></span> objets</div>
 					<img src="images/bag.png" alt="" />
 				</a>
 				<div class="clearfix"> </div>

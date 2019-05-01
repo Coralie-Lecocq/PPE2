@@ -47,7 +47,7 @@
                             <div class="simpleCart_shelfItem">
                                 <p><span><?php  echo $product->prix + (20/100)*$product->prix . "€"; ?></span> <i class="item_price"><?php  echo $product->prix . "€"; ?></i></p>
                     <!-- item_add fonctionne avec total dasn header -->
-                                <p><a class="item_add" href="addpanier.php?id=<?php echo $product->idconsommable; ?>">Ajouter au panier</a></p>
+                                <p><a class="item_add" href="addpanier.php?id=<?php echo $product->idconsommable; ?>&type=consommable">Ajouter au panier</a></p>
                             </div>
                         </div>
                     </div>
