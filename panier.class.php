@@ -17,6 +17,12 @@
             }
         }
 
+        public function remove($product_id, $type) {
+            if(isset($_SESSION['panier'][$type][$product_id])) {
+                $_SESSION['panier'][$type][$product_id]--;
+            }
+        }
+
         public function del($product_id, $type){
             unset($_SESSION['panier'][$type][$product_id]);
         }
