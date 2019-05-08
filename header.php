@@ -44,7 +44,15 @@
                         <?php if(isset($_SESSION['total'])) { echo $_SESSION['total'] . ' €'; } ?>
                     </span> 
                     <span class="quantity">
-                        <?php echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); ?>
+                        <?php 
+                        if(isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) { 
+                            echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); 
+                        } else if (isset($_SESSION['panier']['consommable']) && !isset($_SESSION['panier']['borne'])) {
+                            echo count($_SESSION['panier']['consommable']); 
+                        } else if (!isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) {
+                            echo count($_SESSION['panier']['borne']); 
+                        }
+                         ?>
                     </span> objets</div>
 					<img src="images/bag.png" alt="" />
 				</a>
