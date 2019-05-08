@@ -57,7 +57,9 @@
                     var_dump($req);
                     if($insertUsr = $bdd->query($req))
                     {
-                        echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
+                       // echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
+                       echo "Félicitation ! Connectez vous"; ?> <a href='formLogin.php'> ici </a> <?php 
+                        
                     }    
                     else
                     {
