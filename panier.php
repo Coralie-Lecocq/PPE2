@@ -2,6 +2,14 @@
     if(isset($_GET['del'])) {
         $panier->del($_GET['del'], $_GET['type']);
     }
+
+    if(isset($_GET['minus'])) {
+        $panier->remove($_GET['minus'], $_GET['type']);
+    }
+
+    if(isset($_GET['plus'])) {
+        $panier->add($_GET['plus'], $_GET['type']);
+    }
 ?>
 
 <div class="breadcrumb_dress">
@@ -16,6 +24,7 @@
 <div class="checkout">
     <div class="container">
     <?php
+    var_dump($_SESSION);
         $ids = array_keys($_SESSION['panier']);
         $idsConsommables = array_keys($_SESSION['panier']['consommable']);
         $idsBornes = array_keys($_SESSION['panier']['borne']);
@@ -65,9 +74,9 @@
                     <td class="invert">
                          <div class="quantity"> 
                             <div class="quantity-select">                           
-                                <div class="entry value-minus">&nbsp;</div>
+                                <a href='?page=panier&type=consommable&minus=<?php echo $consommable->idconsommable; ?>'><div class="entry value-minus">&nbsp;</div></a>
                                 <div class="entry value"><span><?php echo $_SESSION['panier']['consommable'][$consommable->idconsommable];  ?></span></div>
-                                <div class="entry value-plus active">&nbsp;</div>
+                                <a href='?page=panier&type=consommable&plus=<?php echo $consommable->idconsommable; ?>'><div class="entry value-plus active">&nbsp;</div></a>
                             </div>
                         </div>
                     </td>
@@ -89,9 +98,9 @@
                     <td class="invert">
                          <div class="quantity"> 
                             <div class="quantity-select">                           
-                                <div class="entry value-minus">&nbsp;</div>
+                                <a href='?page=panier&type=borne&minus=<?php echo $borne->idBornes; ?>'><div class="entry value-minus">&nbsp;</div></a>
                                 <div class="entry value"><span><?php echo $_SESSION['panier']['borne'][$borne->idBornes];  ?></span></div>
-                                <div class="entry value-plus active">&nbsp;</div>
+                                <a href='?page=panier&type=borne&plus=<?php echo $borne->idBornes; ?>'><div class="entry value-plus active">&nbsp;</div></a>
                             </div>
                         </div>
                     </td>
@@ -105,19 +114,6 @@
                 </tr>
                 <?php endforeach; ?>
 
-                            <!--quantity-->
-                                <script>
-                                $('.value-plus').on('click', function(){
-                                    var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
-                                    divUpd.text(newVal);
-                                });
-
-                                $('.value-minus').on('click', function(){
-                                    var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-                                    if(newVal>=1) divUpd.text(newVal);
-                                });
-                                </script>
-                            <!--quantity-->
             </table>
         </div>
         </form>
