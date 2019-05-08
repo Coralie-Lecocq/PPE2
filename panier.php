@@ -1,3 +1,9 @@
+<?php
+    if(isset($_GET['del'])) {
+        $panier->del($_GET['del'], $_GET['type']);
+    }
+?>
+
 <div class="breadcrumb_dress">
 		<div class="container">
 			<ul>
@@ -9,15 +15,39 @@
 
 <div class="checkout">
     <div class="container">
+    <?php
+        $ids = array_keys($_SESSION['panier']);
+        $idsConsommables = array_keys($_SESSION['panier']['consommable']);
+        $idsBornes = array_keys($_SESSION['panier']['borne']);
+        if(empty($ids)) {
+            $consommables = array();
+            $bornes = array();
+        } else {
+            if(empty($idsConsommables)) {
+                $consommables = array();
+            } else {
+                $req = $bdd->query('SELECT * FROM consommables WHERE idconsommable IN ('. implode(',', $idsConsommables) . ')');
+                $consommables = $req->fetchAll();
+            }
+
+            if (empty($idsBornes)) {
+                $bornes = array();
+            } else {
+                $req = $bdd->query('SELECT * FROM bornes WHERE idBornes IN ('. implode(',',   $idsBornes) . ')');
+                $bornes = $req->fetchAll();
+            }
+        }
+    
+
+    ?>
         <!-- nb de produit à reprendre dans la base : panier -->
-        <h3>Votre panier contient: <span>3 Produits</span></h3>
+        <h3>Votre panier contient: <span><?php echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); ?> Produit(s)</span></h3>
         
         <form method="post" action="panier.php">
         <div class="checkout-right">
             <table class="timetable_sub">
                 <thead>
                     <tr>
-                        <th>N.</th>	
                         <th>Produits</th>
                         <th>Quantité</th>
                         <th>Nom du Produit</th>
@@ -27,103 +57,54 @@
                 </thead>
         
                 <!-- générer lignes / nb de produit -->
-                <?php
-                    include('db.php');
-                    $ids = array_keys($_SESSION['panier']);
-                    $req = $bdd->query(`SELECT * FROM products WHERE id IN(`.implode(`,`,$ids).`)`);
-                    $product = $req->fetch();
-                    foreach($products as $product):
+                <?php  
+                    foreach($consommables as $consommable):
                 ?>
                 <tr class="rem1">
-                    <td class="invert">1</td>
-                    <td class="invert-image"><a href="single.html"><img src="images/j3.jpg" alt=" " class="img-responsive" /></a></td>
+                    <td class="invert-image"><a href="single.html"><img src="images/borne_2.jpg" alt=" " class="img-responsive" width="50px" /></a></td>
                     <td class="invert">
                          <div class="quantity"> 
                             <div class="quantity-select">                           
                                 <div class="entry value-minus">&nbsp;</div>
-                                <div class="entry value"><span>1</span></div>
+                                <div class="entry value"><span><?php echo $_SESSION['panier']['consommable'][$consommable->idconsommable];  ?></span></div>
                                 <div class="entry value-plus active">&nbsp;</div>
                             </div>
                         </div>
                     </td>
-                    <td class="invert"><?php echo $donnees->libelle; ?></td>
-                    <td class="invert"><?php  echo $donnees->prix . "€"; ?></td>
+                    <td class="invert"><?php echo $consommable->libelle; ?></td>
+                    <td class="invert"><?php  echo $consommable->prix * $_SESSION['panier']['consommable'][$consommable->idconsommable] . "€"; ?></td>
                     <td class="invert">
                         <div class="rem">
-                            <div class="close1"> </div>
+                            <a href='?page=panier&type=consommable&del=<?php echo $consommable->idconsommable; ?>'><div class="close1"></div></a>
                         </div>
-                        <script>$(document).ready(function(c) {
-                            $('.close1').on('click', function(c){
-                                $('.rem1').fadeOut('slow', function(c){
-                                    $('.rem1').remove();
-                                });
-                                });	  
-                            });
-                       </script>
                     </td>
                 </tr>
                 <?php endforeach; ?>
 
-                <!-- LIGNE 2
-                <tr class="rem2">
-                    <td class="invert">2</td>
-                    <td class="invert-image"><a href="single.html"><img src="images/ss5.jpg" alt=" " class="img-responsive" /></a></td>
+                 <?php  
+                    foreach($bornes as $borne):
+                ?>
+                <tr class="rem1">
+                    <td class="invert-image"><a href="single.html"><img src="images/borne_2.jpg" alt=" " class="img-responsive" width="50px" /></a></td>
                     <td class="invert">
                          <div class="quantity"> 
                             <div class="quantity-select">                           
                                 <div class="entry value-minus">&nbsp;</div>
-                                <div class="entry value"><span>1</span></div>
+                                <div class="entry value"><span><?php echo $_SESSION['panier']['borne'][$borne->idBornes];  ?></span></div>
                                 <div class="entry value-plus active">&nbsp;</div>
                             </div>
                         </div>
                     </td>
-                    <td class="invert">Floral Border Skirt</td>
-                    <td class="invert">$5.00</td>
-                    <td class="invert">$270.00</td>
+                    <td class="invert"><?php echo $borne->libelle; ?></td>
+                    <td class="invert"><?php  echo $borne->prix * $_SESSION['panier']['borne'][$borne->idBornes] . "€"; ?></td>
                     <td class="invert">
                         <div class="rem">
-                            <div class="close2"> </div>
+                            <a href='?page=panier&type=borne&del=<?php echo $borne->idBornes; ?>'><div class="close1"></div></a>
                         </div>
-                        <script>$(document).ready(function(c) {
-                            $('.close2').on('click', function(c){
-                                $('.rem2').fadeOut('slow', function(c){
-                                    $('.rem2').remove();
-                                });
-                                });	  
-                            });
-                       </script>
                     </td>
                 </tr>
-                <!-- LIGNE 3 
-                <tr class="rem3">
-                    <td class="invert">3</td>
-                    <td class="invert-image"><a href="single.html"><img src="images/c7.jpg" alt=" " class="img-responsive" /></a></td>
-                    <td class="invert">
-                         <div class="quantity"> 
-                            <div class="quantity-select">                           
-                                <div class="entry value-minus">&nbsp;</div>
-                                <div class="entry value"><span>1</span></div>
-                                <div class="entry value-plus active">&nbsp;</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="invert">Beige Sandals</td>
-                    <td class="invert">$5.00</td>
-                    <td class="invert">$212.00</td>
-                    <td class="invert">
-                        <div class="rem">
-                            <div class="close3"> </div>
-                        </div>
-                        <script>$(document).ready(function(c) {
-                            $('.close3').on('click', function(c){
-                                $('.rem3').fadeOut('slow', function(c){
-                                    $('.rem3').remove();
-                                });
-                                });	  
-                            });
-                       </script>
-                    </td>
-                </tr> -->
+                <?php endforeach; ?>
+
                             <!--quantity-->
                                 <script>
                                 $('.value-plus').on('click', function(){
@@ -145,15 +126,28 @@
                 <h4>Récapitulatif de la commande</h4>
                 <ul>
                     <!-- nom produit et prix : base  -->
-                    <li>Product1 <i>-</i> <span>$200.00 </span></li>
-                    <li>Product2 <i>-</i> <span>$270.00 </span></li>
-                    <li>Product3 <i>-</i> <span>$212.00 </span></li>
-                    <li>Charges <i>-</i> <span>$15.00</span></li> <!-- somme de la colonne charges -->
-                    <li>Total <i>-</i> <span>$697.00</span></li> <!-- total colonne -->
+                    <?php  
+                    $totalconsommable = 0;
+                    foreach($consommables as $consommable):
+                        $totalconsommable += $consommable->prix * $_SESSION['panier']['consommable'][$consommable->idconsommable];
+                    ?>
+                    <li><?php echo $consommable->libelle; ?> <i></i> <span><?php  echo $consommable->prix * $_SESSION['panier']['consommable'][$consommable->idconsommable] . "€"; ?></span></li>
+                    <?php endforeach; ?>
+
+                    <?php 
+                    $totalborne = 0; 
+                    foreach($bornes as $borne):
+                        $totalborne += $borne->prix * $_SESSION['panier']['borne'][$borne->idBornes];
+                    ?>
+                     <li><?php echo $borne->libelle; ?> <i></i> <span><?php  echo $borne->prix * $_SESSION['panier']['borne'][$borne->idBornes] . "€"; ?></span></li>
+                    <?php endforeach; 
+                    $_SESSION['total'] = $totalconsommable + $totalborne;
+                    ?>
+                    <li>Total <i></i> <span><?php echo $totalconsommable + $totalborne . "€"?></span></li> <!-- total colonne -->
                 </ul>
             </div>
             <div class="checkout-right-basket">
-                <a href="?page=papier"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continuer vos achats</a>
+                <a href="?page=borne"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Continuer vos achats</a>
             </div>
             <div class="clearfix"> </div>
         </div>

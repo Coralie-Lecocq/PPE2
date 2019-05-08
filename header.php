@@ -1,9 +1,21 @@
+<?php include('_header.php'); ?>
+
 <!-- header -->
 <header class="header" id="header">
 		<div class="container">
 			<div class="w3l_login">
             <!-- si connecter ne plus rediriger vers formLogin, logout ? -->
-				<a href="formLogin.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <a href="<?php if(isset($_SESSION['prenom'])) {
+                    ?>
+                        logout.php
+                    <?php
+                } else {
+                    ?>
+                        formLogin.php
+                    <?php
+                }
+                ?>
+                "><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
                 <span> 
                 <?php 
                 if (isset($_SESSION['prenom'])) {
@@ -28,7 +40,20 @@
 			<div class="cart box_1">
 				<a href="?page=panier">
 					<div class="total">
-					<span class="simpleCart_total"></span> <span id="simpleCart_quantity" class="simpleCart_quantity"></span> objets</div>
+                    <span class="price">
+                        <?php if(isset($_SESSION['total'])) { echo $_SESSION['total'] . ' €'; } ?>
+                    </span> 
+                    <span class="quantity">
+                        <?php 
+                        if(isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) { 
+                            echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); 
+                        } else if (isset($_SESSION['panier']['consommable']) && !isset($_SESSION['panier']['borne'])) {
+                            echo count($_SESSION['panier']['consommable']); 
+                        } else if (!isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) {
+                            echo count($_SESSION['panier']['borne']); 
+                        }
+                         ?>
+                    </span> objets</div>
 					<img src="images/bag.png" alt="" />
 				</a>
 				<div class="clearfix"> </div>

@@ -1,6 +1,6 @@
 <?php
    
-    include ("db.php");
+    include ('_header.php');
         
     /* DEBUT VERIFICATION DE LA RECEPTION DE FORMULAIRE */
     if (isset($_POST['user']) && isset($_POST['passwd'])){      // cas ou on reçoit un formulaire
