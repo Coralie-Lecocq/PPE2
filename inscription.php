@@ -43,29 +43,26 @@
         <?php
             include ('db.php');
            
-            if(isset($_POST['user'], $_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['passwd'], $_POST['confirmpasswd']))
+            if(isset($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['passwd'], $_POST['confirmpasswd']))
             {
-                 if ($_POST['passwd'] == $_POST['confirmpasswd'])
-                 {
-                 $user = addslashes($_POST['user']);
-                 $nom = addslashes($_POST['nom']);
-                 $prenom = addslashes($_POST['prenom']);
-                 $email = addslashes($_POST['email']);
-                 $passwd = md5($_POST['passwd']);
-                
-                 include("db.php");
-                     
-                 $req = 'INSERT INTO users (login, passwd, nom, prenom, email) VALUES ("' .$user. '", "' .$passwd. '", "' .$nom. '", "'.$prenom.'", "' .$email.'")';
-                     
-                 if($insertUsr = $bdd->query($req))
-                 {
-                    echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
-                 }
-                 else
-                 {
-                    echo " FAIL ! Le login ou l'email est déjà utilisé. " . $bdd->errorInfo()[2];
-                 }
-                 }              
+                if ($_POST['passwd'] == $_POST['confirmpasswd'])
+                {
+                    $nom = addslashes($_POST['nom']);
+                    $prenom = addslashes($_POST['prenom']);
+                    $email = addslashes($_POST['email']);
+                    $passwd = md5($_POST['passwd']);
+                        
+                    $req = 'INSERT INTO clients (email, password, nom, prenom) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'")';
+
+                    if($insertUsr = $bdd->query($req))
+                    {
+                        echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
+                    }    
+                    else
+                    {
+                        echo " FAIL ! Le login ou l'email est déjà utilisé. " . $bdd->errorInfo()[2];
+                    }
+                }              
             }
         ?>
         
@@ -75,7 +72,7 @@
                 <div id="output"></div>
                 <div class="avatar"></div>
                 <div class="form-box">
-                    <form action="" method="POST">
+                    <form action="inscription.php" method="POST">
                         <input name="nom" type="text" placeholder="Nom" required autofocus>
                         <input name="prenom" type="text" placeholder="Prénom" required>
                         <input name="email" type="email" placeholder="email" required>
@@ -84,7 +81,7 @@
 				        <button class="btn btn-info btn-block login" type="submit">S'inscrire</button>
 			         </form>
                         <a href="formLogin.php">Se connecter</a><br/>
-                        <a href='dashboard.php'>Retour au site</a>
+                        <a href='index.php'>Retour au site</a>
 		          </div>
 	       </div>
         </div>

@@ -16,14 +16,11 @@
 <br>
 
 <?php
-        include ("db.php");
-
         // On récupère tout le contenu de la table 
-        $reponse = $bdd->query('SELECT * FROM bornes');
-
-        // On affiche chaque entrée une à une
-        while ($donnees = $reponse->fetch())
-        {
+        $req = $bdd->query('SELECT * FROM bornes');
+        $bornes = $req->fetchAll();
+        
+        foreach($bornes as $borne):
         ?>
             <div class="w3ls_dresses_grid_right_grid3">
                 <div class="col-md-4 agileinfo_new_products_grid agileinfo_new_products_grid_dresses">
@@ -45,20 +42,15 @@
                                     </ul>
                                 </div>
                             </div> 
-                            <h5><a href="?page=single"><?php echo $donnees->libelle; ?></a></h5>
+                            <h5><a href="?page=single"><?php echo $borne->libelle; ?></a></h5>
                             <div class="simpleCart_shelfItem">
-                                <p><span><?php  echo $donnees->prix + (20/100)*$donnees->prix . "€"; ?></span> <i class="item_price"><?php  echo $donnees->prix . "€"; ?></i></p>
-                                <p><a class="item_add" href="#">Ajouter au panier</a></p>
+                                <p><span><?php  echo $borne->prix + (20/100)*$borne->prix . "€"; ?></span> <i class="item_price"><?php  echo $borne->prix . "€"; ?></i></p>
+                                <p><a class="item_add" href="addpanier.php?id=<?php echo $borne->idBornes; ?>&type=borne">Ajouter au panier</a></p>
                             </div>
                         </div>
                     </div>
             </div>
-        <?php
-        }
-
-        $reponse->closeCursor(); // Termine le traitement de la requête
-
-        ?>
+        <?php endforeach; ?>
         <div class="clearfix"> </div>
 
                                 

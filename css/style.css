@@ -2538,7 +2538,7 @@ td.invert-image a img {
 .rem{
 	position:relative;
 }
-.close1,.close2,.close3 {
+.close1,.close2,.close3,.close4,.close5,.close6,.close7,.close8,.close9,.close10 {
     background: url('../images/close.png') no-repeat 0px 0px;
     cursor: pointer;
     width: 32px;
@@ -3838,7 +3838,7 @@ td.invert-image a img {
 	.timetable_sub td {
 		border: none;
 	}
-	.close1, .close2, .close3 {
+	.close1,.close2,.close3,.close4,.close5,.close6,.close7,.close8,.close9,.close10 {
 		right: 190px;
 		top: -4px;
 	}
@@ -3909,7 +3909,7 @@ td.invert-image a img {
 	.modal-body {
 		padding: 0em 1em 1em;
 	}
-	.close1, .close2, .close3 {
+	.close1,.close2,.close3,.close4,.close5,.close6,.close7,.close8,.close9,.close10 {
 		right: 160px;
 	}
 	.w3agile_special_deals_grid_left_grid_pos1 {
@@ -4070,7 +4070,7 @@ td.invert-image a img {
 	.contact-left {
 		padding: 0;
 	}
-	.close1, .close2, .close3 {
+	.close1,.close2,.close3,.close4,.close5,.close6,.close7,.close8,.close9,.close10 {
 		right: 145px;
 	}
 }
@@ -4100,7 +4100,7 @@ td.invert-image a img {
 	.modal-body {
 		padding: 0em 1em 2em;
 	}
-	.close1, .close2, .close3 {
+	.close1,.close2,.close3,.close4,.close5,.close6,.close7,.close8,.close9,.close10 {
 		right: 139px;
 	}
 	.resp-tab-item {
@@ -4317,7 +4317,7 @@ td.invert-image a img {
 		width: 100%;
 		font-size: 14px;
 	}
-	.close1, .close2, .close3 {
+	.close1,.close2,.close3,.close4,.close5,.close6,.close7,.close8,.close9,.close10 {
 		right: 111px;
 	}
 }

@@ -1,10 +1,28 @@
+<?php include('_header.php'); ?>
+
 <!-- header -->
 <header class="header" id="header">
 		<div class="container">
 			<div class="w3l_login">
             <!-- si connecter ne plus rediriger vers formLogin, logout ? -->
-				<a href="formLogin.php"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                <span> <?php echo $_SESSION['prenom']. ' ' .$_SESSION['nom']?> </span>
+                <a href="<?php if(isset($_SESSION['prenom'])) {
+                    ?>
+                        logout.php
+                    <?php
+                } else {
+                    ?>
+                        formLogin.php
+                    <?php
+                }
+                ?>
+                "><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                <span> 
+                <?php 
+                if (isset($_SESSION['prenom'])) {
+                    echo $_SESSION['prenom']. ' ' .$_SESSION['nom']; 
+                }
+                ?> 
+                </span>
 			</div>
 			<div class="w3l_logo">
 				<h1><a href="?page=home">Chop Ta Photo<span>Print your life</span></a></h1>
@@ -22,7 +40,20 @@
 			<div class="cart box_1">
 				<a href="?page=panier">
 					<div class="total">
-					<span class="simpleCart_total"></span> <span id="simpleCart_quantity" class="simpleCart_quantity"></span> objets</div>
+                    <span class="price">
+                        <?php if(isset($_SESSION['total'])) { echo $_SESSION['total'] . ' €'; } ?>
+                    </span> 
+                    <span class="quantity">
+                        <?php 
+                        if(isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) { 
+                            echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); 
+                        } else if (isset($_SESSION['panier']['consommable']) && !isset($_SESSION['panier']['borne'])) {
+                            echo count($_SESSION['panier']['consommable']); 
+                        } else if (!isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) {
+                            echo count($_SESSION['panier']['borne']); 
+                        }
+                         ?>
+                    </span> objets</div>
 					<img src="images/bag.png" alt="" />
 				</a>
 				<div class="clearfix"> </div>
@@ -53,15 +84,13 @@
                                         <div class="col-sm-3">
                                             <ul class="multi-column-dropdown">
                                                 <h6>Papeterie</h6>
-                                                <li><a href="?page=papier">Papier photo brillant</a></li>
-                                                <li><a href="?page=papier">Papier photo mat</a></li>
+                                                <li><a href="?page=papier">Papier photo</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-sm-3">
                                             <ul class="multi-column-dropdown">
                                                 <h6>Cartouche d'encre</h6>
-                                                <li><a href="?page=encre">Cartouche jet d'encre</a></li>
-                                                <li><a href="?page=encre">Cartouche laser</a></li>
+                                                <li><a href="?page=encre">Cartouche d'encre</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-sm-4">

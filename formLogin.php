@@ -50,7 +50,7 @@
                         <button class="btn btn-info btn-block login" type="submit">Se connecter</button>
                     </form>
                         <a href="inscription.php">S'inscrire</a><br/>
-                        <a href='dashboard.php'>Retour au site</a>
+                        <a href='index.php'>Retour au site</a>
                 </div>
             </div>
         </div>
