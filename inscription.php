@@ -52,8 +52,9 @@
                     $email = addslashes($_POST['email']);
                     $passwd = md5($_POST['passwd']);
                         
-                    $req = 'INSERT INTO clients (email, password, nom, prenom) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'")';
+                    $req = 'INSERT INTO clients (email, password, nom, prenom, tel, cp, ville, adresse, siret) VALUES ("' .$email.'", "' .$passwd. '", "' .$nom. '", "'.$prenom.'", 0, 0, 0, 0, 0)';
 
+                    var_dump($req);
                     if($insertUsr = $bdd->query($req))
                     {
                         echo " UTILISATEUR AJOUTE AVEC ID : " . $bdd->lastInsertId();
