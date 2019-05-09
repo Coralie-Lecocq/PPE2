@@ -24,10 +24,15 @@
 <div class="checkout">
     <div class="container">
     <?php
-    var_dump($_SESSION);
-        $ids = array_keys($_SESSION['panier']);
-        $idsConsommables = array_keys($_SESSION['panier']['consommable']);
-        $idsBornes = array_keys($_SESSION['panier']['borne']);
+        if (isset($_SESSION['panier'])) {
+            $ids = array_keys($_SESSION['panier']);
+        }
+        if (isset($_SESSION['panier']['consommable'])) {
+            $idsConsommables = array_keys($_SESSION['panier']['consommable']);
+        }
+        if (isset($_SESSION['panier']['borne'])) {
+            $idsBornes = array_keys($_SESSION['panier']['borne']);
+        }
         if(empty($ids)) {
             $consommables = array();
             $bornes = array();
@@ -50,7 +55,15 @@
 
     ?>
         <!-- nb de produit à reprendre dans la base : panier -->
-        <h3>Votre panier contient: <span><?php echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); ?> Produit(s)</span></h3>
+        <h3>Votre panier contient: <span><?php 
+            if(isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) { 
+                echo count($_SESSION['panier']['consommable']) + count($_SESSION['panier']['borne']); 
+            } else if (isset($_SESSION['panier']['consommable']) && !isset($_SESSION['panier']['borne'])) {
+                echo count($_SESSION['panier']['consommable']); 
+            } else if (!isset($_SESSION['panier']['consommable']) && isset($_SESSION['panier']['borne'])) {
+                echo count($_SESSION['panier']['borne']); 
+            }
+        ?> Produit(s)</span></h3>
         
         <form method="post" action="panier.php">
         <div class="checkout-right">
